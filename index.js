@@ -45,7 +45,6 @@ app.post('/', express.json(), (req, res) => {
 	const feedbackIntent = (agent) => {
 		console.log(agent.query);
 		agent.add('Thanks for your valuable feedback');
-		agent.setContext({ name: Welcome, lifespanCount: -1 });
 	};
 	// Normal Intents
 	mapIntent.set('Feedback', feedbackIntent);
@@ -57,21 +56,17 @@ app.post('/', express.json(), (req, res) => {
 	//Feedback
 	const noFeedbackIntent = (agent) => {
 		agent.add('No problem, Have a nice day');
-		agent.setContext({ name: Welcome, lifespanCount: -1 });
 	};
 	const complaintFeedbackIntent = (agent) => {
 		agent.add(
 			'We are really sorry to hear that , We will register this complain and try our best improve upon that '
 		);
-		agent.setContext({ name: Welcome, lifespanCount: -1 });
 	};
 	const reviewFeedbackIntent = (agent) => {
 		agent.add('Thanks a lot for your review,Hope we met your expectation ');
-		agent.setContext({ name: Welcome, lifespanCount: -1 });
 	};
 	const ratingFeedbackIntent = (agent) => {
 		agent.add('Thanks for rating us ,Hope we met your expectation ');
-		agent.setContext({ name: Welcome, lifespanCount: -1 });
 	};
 
 	//Feedback Intents
