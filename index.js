@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const dfff = require('dialogflow-fulfillment');
 const orders = require('./orders');
+const PORT = process.env.PORT || 3000;
 
 app.get('/', (req, res) => {
 	res.send('Hello from chatbot');
@@ -134,6 +135,6 @@ app.post('/', express.json(), (req, res) => {
 	agent.handleRequest(mapIntent);
 });
 
-app.listen(3000, () => {
-	console.log('Server started at port 3000');
+app.listen(PORT, () => {
+	console.log(`Server started at port ${PORT}`);
 });
