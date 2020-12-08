@@ -1,3 +1,4 @@
+//https://sauravagtl-fulfillment.herokuapp.com/
 const express = require('express');
 const app = express();
 const dfff = require('dialogflow-fulfillment');
@@ -32,13 +33,21 @@ app.post('/', express.json(), (req, res) => {
 		let check = false;
 		orders.forEach((order) => {
 			if (order.id == id) {
-				if (order.payment) agent.add('Payment has been received');
-				else agent.add('Payment is due!');
-
-				if (order.shipment) agent.add(`The order has been shipped and it has arrived ${order.currLocation}`);
-				else agent.add('Order has not been shipped');
+				if (order.payment) {
+					if (order.shipment)
+						agent.add(
+							`Payment has been received and the order has been shipped and it has arrived ${order.currLocation}\nDo you have any feedback for us? `
+						);
+					else
+						agent.add(
+							`Hello ${order.orderer}, payment has been received but the order has not been shipped \n Any feedback? `
+						);
+				} else {
+					agent.add(
+						`Hello ${order.orderer},payment has not been received hence order not shipped\n Any feedback for us ?`
+					);
+				}
 				check = true;
-				agent.add('Do you have any feedback for us?');
 			}
 		});
 		if (!check) agent.add('No such Order Id Exists! Check your OrderId ');
@@ -87,9 +96,10 @@ app.post('/', express.json(), (req, res) => {
 		let check = false;
 		orders.forEach((order) => {
 			if (order.id === agent.query) {
-				agent.add(`Hello ${order.orderer}, You will soon recive a returning confirmation on your mail`);
+				agent.add(
+					`Hello ${order.orderer}, You will soon recive a returning confirmation on your mail\nDo you have any feedback for us?`
+				);
 				check = true;
-				agent.add('Do you have any feedback for us?');
 			}
 		});
 		if (!check) agent.add('No such Order Id Exists! Check your OrderId ');
@@ -101,8 +111,9 @@ app.post('/', express.json(), (req, res) => {
 		let check = false;
 		orders.forEach((order) => {
 			if (order.id === agent.query) {
-				agent.add(`Hello ${order.orderer}, You will soon recive a exchange confirmation on your mail`);
-				agent.add('Do you have any feedback for us?');
+				agent.add(
+					`Hello ${order.orderer}, You will soon recive a exchange confirmation on your mail\n Do you have any feedback for us?`
+				);
 				check = true;
 			}
 		});
@@ -116,8 +127,10 @@ app.post('/', express.json(), (req, res) => {
 		let check = false;
 		orders.forEach((order) => {
 			if (order.id === agent.query) {
-				agent.add(`Hello ${order.orderer}, You will soon recive a cancellation confirmation on your mail`);
-				agent.add('Do you have any feedback for us?');
+				agent.add(
+					`Hello ${order.orderer}, You will soon recive a cancellation confirmation on your mail\nDo you have any feedback for us?`
+				);
+
 				check = true;
 			}
 		});
